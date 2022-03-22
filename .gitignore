@@ -88,3 +88,10 @@ fabric.properties
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+/.idea/copyright/GPL_3_0.xml
+/.idea/copyright/profiles_settings.xml
+/.idea/.gitignore
+/.idea/aws.xml
+/.idea/modules.xml
+/.idea/PicartoAPIWrapper.iml
+/.idea/vcs.xml

@@ -16,7 +16,7 @@ pass the client ID and Secret where needed. If one or both is needed and not set
 an error.
 
 ```go
-api.Rest = api.NewPicarto("<CLIENT_ID>", "<CLIENT_SECRET>")
+api.Rest = api.NewPicarto("CLIENT_ID", "CLIENT_SECRET")
 ```
 
 ## Pull Requests
