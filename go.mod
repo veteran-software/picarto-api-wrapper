@@ -1,4 +1,4 @@
-module PicartoAPI
+module github.com/veteran-software/picarto-api-wrapper
 
 go 1.18
 
