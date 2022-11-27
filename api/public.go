@@ -55,6 +55,7 @@ const (
 // GetCategories
 //
 // Get information about all categories
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetCategories() *[]Category {
 	resp, err := Rest.Request(http.MethodGet, api+"/categories", nil, &token)
@@ -79,6 +80,7 @@ func GetCategories() *[]Category {
 // GetChannelByID
 //
 // Gets information about a channel by ID - providing a bearer token with permission readpub can get followed status in result
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetChannelByID(channelID int) *Channel {
 	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d", channelID), nil, &token)
@@ -103,6 +105,7 @@ func GetChannelByID(channelID int) *Channel {
 // GetChannelByName
 //
 // Gets information about a channel by name - providing a bearer token with permission readpub can get followed status in result
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetChannelByName(channelName string) *Channel {
 	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s", channelName), nil, &token)
@@ -124,11 +127,12 @@ func GetChannelByName(channelName string) *Channel {
 	return &channel
 }
 
-// GetAllChannelVideosByID
+// GetAllChannelVideosByChannelID
 //
 // Get all videos for a channel by id
+//
 //goland:noinspection GoUnusedExportedFunction
-func GetAllChannelVideosByID(channelID int) *[]Video {
+func GetAllChannelVideosByChannelID(channelID int) *[]Video {
 	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d/videos", channelID), nil, &token)
 	if err != nil {
 		log.Errorln(err)
@@ -148,12 +152,12 @@ func GetAllChannelVideosByID(channelID int) *[]Video {
 	return &videos
 }
 
-//
-// GetAllChannelVideosByName
+// GetAllChannelVideosByChannelName
 //
 // Get all videos for a channel by name
+//
 //goland:noinspection GoUnusedExportedFunction
-func GetAllChannelVideosByName(channelName string) *[]Video {
+func GetAllChannelVideosByChannelName(channelName string) *[]Video {
 	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s/videos", channelName), nil, &token)
 	if err != nil {
 		log.Errorln(err)
@@ -176,6 +180,7 @@ func GetAllChannelVideosByName(channelName string) *[]Video {
 // GetOnline
 //
 // Gets all currently online channels - providing a bearer token with permission readpub can get followed status in result
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetOnline(adult *bool, gaming *bool, category ...string) *[]Online {
 	var qsp []string
@@ -188,7 +193,7 @@ func GetOnline(adult *bool, gaming *bool, category ...string) *[]Online {
 
 	qsp = append(qsp, Adult+strconv.FormatBool(*adult), "gaming="+strconv.FormatBool(*gaming))
 
-	if category != nil || len(category) > 0 {
+	if category != nil && len(category) > 0 {
 		qsp = append(qsp, "category="+strings.Join(category, ","))
 	}
 
@@ -219,6 +224,7 @@ func GetOnline(adult *bool, gaming *bool, category ...string) *[]Online {
 // SearchChannels
 //
 // Get all channels matching the given search criteria (by name and tags)
+//
 //goland:noinspection GoUnusedExportedFunction
 func SearchChannels(q string, adult *bool, page *uint64, commissions *bool) *[]Channel {
 	var qsp []string
@@ -271,6 +277,7 @@ func SearchChannels(q string, adult *bool, page *uint64, commissions *bool) *[]C
 // SearchVideos
 //
 // Get all channels matching the given search criteria (by name and tags)
+//
 //goland:noinspection GoUnusedExportedFunction
 func SearchVideos(q string, adult *bool, page *uint64) *[]Video {
 	var qsp []string
@@ -319,6 +326,7 @@ func SearchVideos(q string, adult *bool, page *uint64) *[]Video {
 // GetStreamByChannelID
 //
 // Get stream
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetStreamByChannelID(channelID int) *Stream {
 	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d/streams", channelID), nil, &token)
@@ -343,6 +351,7 @@ func GetStreamByChannelID(channelID int) *Stream {
 // GetStreamByChannelName
 //
 // Get stream
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetStreamByChannelName(channelName string) *Stream {
 	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s/streams", channelName), nil, &token)
@@ -367,6 +376,7 @@ func GetStreamByChannelName(channelName string) *Stream {
 // GetNotifications
 //
 // Get all global notifications/announcements
+//
 //goland:noinspection GoUnusedExportedFunction
 func GetNotifications() *Notification {
 	resp, err := Rest.Request(http.MethodGet, api+"/notifications", nil, &token)

@@ -1,12 +1,20 @@
 package api
 
+import "time"
+
 type Category struct {
-	ID             int    `json:"id"`
-	Name           string `json:"name"`
-	TotalChannels  int    `json:"total_channels"`
-	OnlineChannels int    `json:"online_channels"`
-	Viewers        int    `json:"viewers"`
-	Adult          bool   `json:"adult"`
+	ID             int        `json:"id"`
+	Name           string     `json:"name"`
+	Adult          bool       `json:"adult"`
+	IsActive       bool       `json:"is_active"`
+	Image          string     `json:"image"`
+	CreatedAt      time.Time  `json:"created_at"`
+	UpdatedAt      time.Time  `json:"updated_at"`
+	DeletedAt      *time.Time `json:"deleted_at"`
+	TotalViewers   int        `json:"total_viewers"`
+	TotalChannels  int        `json:"total_channels"`
+	OnlineChannels int        `json:"online_channels"`
+	TotalViews     string     `json:"total_views"`
 }
 
 type Channel struct {
@@ -59,8 +67,8 @@ type Channel struct {
 		Id   int    `json:"id"`
 		Name string `json:"name"`
 	} `json:"languages"`
-	Following    bool   `json:"following"`
-	CreationDate string `json:"creation_date"`
+	Following    bool      `json:"following"`
+	CreationDate time.Time `json:"creation_date"`
 }
 
 type Video struct {
