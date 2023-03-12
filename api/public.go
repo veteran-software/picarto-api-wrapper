@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Veteran Software
+ * Copyright (c) 2022-2023. Veteran Software
  *
  * Picarto API Wrapper - A custom wrapper for the Picarto REST API developed for a proprietary project.
  *
@@ -23,24 +23,8 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-)
 
-import (
-	"os"
-
-	"github.com/sirupsen/logrus"
-	easy "github.com/t-tomalak/logrus-easy-formatter"
-)
-
-var (
-	log = logrus.Logger{
-		Out: os.Stderr,
-		Formatter: &easy.Formatter{
-			TimestampFormat: "2006-01-02 15:04:05.999",
-			LogFormat:       "[%lvl%]: %msg%\n",
-		},
-		ReportCaller: true,
-	}
+	log "github.com/veteran-software/nowlive-logging"
 )
 
 const (
@@ -58,9 +42,9 @@ const (
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetCategories() *[]Category {
-	resp, err := Rest.Request(http.MethodGet, api+"/categories", nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+"/categories", nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -70,7 +54,7 @@ func GetCategories() *[]Category {
 	var categories []Category
 	err = json.NewDecoder(resp.Body).Decode(&categories)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -83,9 +67,9 @@ func GetCategories() *[]Category {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetChannelByID(channelID int) *Channel {
-	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d", channelID), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d", channelID), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -108,9 +92,9 @@ func GetChannelByID(channelID int) *Channel {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetChannelByName(channelName string) *Channel {
-	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s", channelName), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s", channelName), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -120,7 +104,7 @@ func GetChannelByName(channelName string) *Channel {
 	var channel Channel
 	err = json.NewDecoder(resp.Body).Decode(&channel)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -133,9 +117,9 @@ func GetChannelByName(channelName string) *Channel {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetAllChannelVideosByChannelID(channelID int) *[]Video {
-	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d/videos", channelID), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d/videos", channelID), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -145,7 +129,7 @@ func GetAllChannelVideosByChannelID(channelID int) *[]Video {
 	var videos []Video
 	err = json.NewDecoder(resp.Body).Decode(&videos)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -158,9 +142,9 @@ func GetAllChannelVideosByChannelID(channelID int) *[]Video {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetAllChannelVideosByChannelName(channelName string) *[]Video {
-	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s/videos", channelName), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s/videos", channelName), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -170,7 +154,7 @@ func GetAllChannelVideosByChannelName(channelName string) *[]Video {
 	var videos []Video
 	err = json.NewDecoder(resp.Body).Decode(&videos)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -202,9 +186,9 @@ func GetOnline(adult *bool, gaming *bool, category ...string) *[]Online {
 		params = "?" + strings.Join(qsp, "&")
 	}
 
-	resp, err := Rest.Request(http.MethodGet, fmt.Sprintf(api+"/online%s", params), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, fmt.Sprintf(api+"/online%s", params), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -214,7 +198,7 @@ func GetOnline(adult *bool, gaming *bool, category ...string) *[]Online {
 	var online []Online
 	err = json.NewDecoder(resp.Body).Decode(&online)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -255,9 +239,9 @@ func SearchChannels(q string, adult *bool, page *uint64, commissions *bool) *[]C
 		params = "?" + strings.Join(qsp, "&")
 	}
 
-	resp, err := Rest.Request(http.MethodGet, fmt.Sprintf(api+"/search/channels%s", params), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, fmt.Sprintf(api+"/search/channels%s", params), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -267,7 +251,7 @@ func SearchChannels(q string, adult *bool, page *uint64, commissions *bool) *[]C
 	var channels []Channel
 	err = json.NewDecoder(resp.Body).Decode(&channels)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -304,9 +288,9 @@ func SearchVideos(q string, adult *bool, page *uint64) *[]Video {
 		params = "?" + strings.Join(qsp, "&")
 	}
 
-	resp, err := Rest.Request(http.MethodGet, fmt.Sprintf(api+"/search/videos%s", params), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, fmt.Sprintf(api+"/search/videos%s", params), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -316,7 +300,7 @@ func SearchVideos(q string, adult *bool, page *uint64) *[]Video {
 	var videos []Video
 	err = json.NewDecoder(resp.Body).Decode(&videos)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -329,9 +313,9 @@ func SearchVideos(q string, adult *bool, page *uint64) *[]Video {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetStreamByChannelID(channelID int) *Stream {
-	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d/streams", channelID), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/id/%d/streams", channelID), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -341,7 +325,7 @@ func GetStreamByChannelID(channelID int) *Stream {
 	var stream Stream
 	err = json.NewDecoder(resp.Body).Decode(&stream)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -354,9 +338,9 @@ func GetStreamByChannelID(channelID int) *Stream {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetStreamByChannelName(channelName string) *Stream {
-	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s/streams", channelName), nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+fmt.Sprintf("/channel/name/%s/streams", channelName), nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -366,7 +350,7 @@ func GetStreamByChannelName(channelName string) *Stream {
 	var stream Stream
 	err = json.NewDecoder(resp.Body).Decode(&stream)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 
@@ -379,9 +363,9 @@ func GetStreamByChannelName(channelName string) *Stream {
 //
 //goland:noinspection GoUnusedExportedFunction
 func GetNotifications() *Notification {
-	resp, err := Rest.Request(http.MethodGet, api+"/notifications", nil, &token)
+	resp, err := Rest.Request(http.MethodGet, api+"/notifications", nil)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 	defer func(Body io.ReadCloser) {
@@ -391,7 +375,7 @@ func GetNotifications() *Notification {
 	var notification Notification
 	err = json.NewDecoder(resp.Body).Decode(&notification)
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(log.Picarto, log.FuncName(), err)
 		return nil
 	}
 

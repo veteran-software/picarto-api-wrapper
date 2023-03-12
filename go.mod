@@ -1,11 +1,10 @@
 module github.com/veteran-software/picarto-api-wrapper
 
-go 1.18
+go 1.20
 
 require (
 	github.com/gojek/heimdall/v7 v7.0.2
-	github.com/sirupsen/logrus v1.8.1
-	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
+	github.com/veteran-software/nowlive-logging v1.0.4
 )
 
 require (
@@ -13,8 +12,10 @@ require (
 	github.com/gojek/valkyrie v0.0.0-20190210220504-8f62c1e7ba45 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/stretchr/objx v0.3.0 // indirect
-	github.com/stretchr/testify v1.7.1 // indirect
-	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	github.com/sirupsen/logrus v1.9.0 // indirect
+	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/stretchr/testify v1.8.2 // indirect
+	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
