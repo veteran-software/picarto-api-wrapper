@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2023. Veteran Software
+ *
+ * Picarto API Wrapper - A custom wrapper for the Picarto REST API developed for a proprietary project.
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package api
 
 import (
@@ -9,6 +25,7 @@ import (
 
 	"github.com/gojek/heimdall/v7"
 	"github.com/gojek/heimdall/v7/httpclient"
+	log "github.com/veteran-software/nowlive-logging"
 )
 
 var (
@@ -31,11 +48,12 @@ var (
 	)
 )
 
-func (r *rateLimiter) Request(method, route string, data *interface{}, token interface{}) (*http.Response, error) {
+func (r *RateLimiter) Request(method, route string, data *interface{}) (*http.Response, error) {
 	return r.requestWithLockedBucket(method, route, "application/json", data)
 }
 
-func (r *rateLimiter) requestWithLockedBucket(method, route, contentType string, b *interface{}) (*http.Response, error) {
+func (r *RateLimiter) requestWithLockedBucket(method, route, contentType string, b *interface{}) (*http.Response,
+	error) {
 	r.lockBucket()
 
 	var buffer bytes.Buffer
@@ -80,9 +98,9 @@ func (r *rateLimiter) requestWithLockedBucket(method, route, contentType string,
 	case http.StatusNoContent:
 	case http.StatusBadGateway:
 	case http.StatusTooManyRequests:
-		log.Warnln("Rate Limited!")
-		log.Infoln(route)
-		log.Infoln(resp.Status)
+		log.Warnln(log.Picarto, log.FuncName(), "Rate Limited!")
+		log.Infoln(log.Picarto, log.FuncName(), route)
+		log.Infoln(log.Picarto, log.FuncName(), resp.Status)
 
 		time.Sleep(time.Until(r.bucket.reset))
 

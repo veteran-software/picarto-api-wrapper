@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. Veteran Software
+ * Copyright (c) 2022-2023. Veteran Software
  *
  * Picarto API Wrapper - A custom wrapper for the Picarto REST API developed for a proprietary project.
  *
@@ -56,8 +56,8 @@ func TestGetCategories(t *testing.T) {
 		if reflect.ValueOf(cat.OnlineChannels).Kind() != reflect.Int {
 			t.Errorf(returnTypeInt, reflect.ValueOf(cat.OnlineChannels).Kind())
 		}
-		if reflect.ValueOf(cat.Viewers).Kind() != reflect.Int {
-			t.Errorf(returnTypeInt, reflect.ValueOf(cat.Viewers).Kind())
+		if reflect.ValueOf(cat.TotalViewers).Kind() != reflect.Int {
+			t.Errorf(returnTypeInt, reflect.ValueOf(cat.TotalViewers).Kind())
 		}
 		if reflect.ValueOf(cat.Adult).Kind() != reflect.Bool {
 			t.Errorf(returnTypeBool, reflect.ValueOf(cat.Adult).Kind())
